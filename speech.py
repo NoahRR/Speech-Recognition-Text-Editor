@@ -40,6 +40,23 @@ def record_audio():
         return voice_data
 
 
+def print_output():
+    print('---------')
+    for i, line in enumerate(OUTPUT):
+        if i == CURSOR:
+            print(f"| {i}  >>  " + line)
+        else:
+            print(f"| {i}      " + line)
+    print('---------')
+
+
+def is_action(first_try, voice_data):
+    for item in ACTIONS:
+        if item['command'] in first_try:
+            exec(item['action'] + f'({first_try, voice_data})')
+            return True
+    return False
+
 def return_first_num_or_false(str):
     return_char = ''
     found_num = False
@@ -54,16 +71,6 @@ def return_first_num_or_false(str):
     if return_char == '':
         return False
     return return_char
-
-def print_output():
-    print('---------')
-    for i, line in enumerate(OUTPUT):
-        if i == CURSOR:
-            print(f"|{i}  >>  " + line)
-        else:
-            print(f"|{i}      " + line)
-    print('---------')
-
 
 def select(voice_data):
 
@@ -101,13 +108,6 @@ def change(voice_data):
     print('CHANGE')
 def delete(voice_data):
     print('DELETE')
-
-def is_action(first_try, voice_data):
-    for item in ACTIONS:
-        if item['command'] in first_try:
-            exec(item['action'] + f'({first_try, voice_data})')
-            return True
-    return False
 
 while True:
     voice_data = record_audio()
